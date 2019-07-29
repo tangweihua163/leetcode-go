@@ -10,7 +10,7 @@ func searchInRange(nums []int, left, right int, target int) int {
 		return linearSearch(nums, left, right, target)
 	}
 
-	if nums[0] < nums[len(nums)-1] {
+	if nums[left] < nums[right] {
 		return binarySearch(nums, left, right, target)
 	}
 
