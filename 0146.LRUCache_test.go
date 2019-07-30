@@ -94,48 +94,48 @@ func Constructor(capacity int) LRUCache {
 	}
 }
 
-func (this *LRUCache) Get(key int) int {
+func (cache *LRUCache) Get(key int) int {
 
-	if this.count == 0 {
+	if cache.count == 0 {
 		return -1
 	}
 
-	if v, ok := this.m[key]; ok {
-		this.list.delete(v)
-		this.list.insert(v)
+	if v, ok := cache.m[key]; ok {
+		cache.list.delete(v)
+		cache.list.insert(v)
 		return v.val
 	} else {
 		return -1
 	}
 }
 
-func (this *LRUCache) Put(key int, value int) {
+func (cache *LRUCache) Put(key int, value int) {
 
-	if p, ok := this.m[key]; ok {
-		this.list.delete(p)
-		this.list.insert(p)
+	if p, ok := cache.m[key]; ok {
+		cache.list.delete(p)
+		cache.list.insert(p)
 		p.val = value
 		return
 	}
 
-	if this.count < this.capacity {
+	if cache.count < cache.capacity {
 		p := &doubleLinkedListNode{
 			key:  key,
 			val:  value,
 			pre:  nil,
 			next: nil,
 		}
-		this.list.insert(p)
+		cache.list.insert(p)
 
-		this.m[key] = p
+		cache.m[key] = p
 
-		this.count++
+		cache.count++
 
 		return
 	} else {
 
-		if suc, k := this.list.evict(); suc {
-			delete(this.m, k)
+		if suc, k := cache.list.evict(); suc {
+			delete(cache.m, k)
 		}
 
 		p := &doubleLinkedListNode{
@@ -145,8 +145,8 @@ func (this *LRUCache) Put(key int, value int) {
 			next: nil,
 		}
 
-		this.list.insert(p)
-		this.m[key] = p
+		cache.list.insert(p)
+		cache.m[key] = p
 
 	}
 
