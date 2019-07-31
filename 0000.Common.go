@@ -125,7 +125,7 @@ func QuickSort(A []int) {
 	if len(A) > 1 {
 		pi := Partition(A)
 		QuickSort(A[0:pi])
-		QuickSort(A[pi:])
+		QuickSort(A[pi+1:])
 	}
 }
 
