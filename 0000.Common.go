@@ -120,3 +120,23 @@ func AdjustDownMinHeap(A []int, i int) {
 		}
 	}
 }
+
+func QuickSort(A []int) {
+	if len(A) > 1 {
+		pi := Partition(A)
+		QuickSort(A[0:pi])
+		QuickSort(A[pi:])
+	}
+}
+
+func Partition(A []int) int {
+	r := len(A) - 1
+	i := -1
+	for j := 0; j <= r; j++ {
+		if A[j] <= A[r] {
+			i++
+			A[i], A[j] = A[j], A[i]
+		}
+	}
+	return i
+}

@@ -24,3 +24,9 @@ func TestHeapSortDESC(t *testing.T) {
 	HeapSortDESC(A)
 	fmt.Println(A)
 }
+
+func TestQuickSort(t *testing.T) {
+	A := []int{25, 346, 65, 52, 23, 5, 452, 23, 434224}
+	QuickSort(A)
+	fmt.Println(A)
+}
