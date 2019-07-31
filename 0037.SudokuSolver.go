@@ -2,22 +2,23 @@ package leetcode_go
 
 func solveSudoku(board [][]byte) {
 
-	var candidate = make([]int, 0, 162)
+	var candidate = make([]byte, 0, 162)
 
 	var row = make([]byte, 81)
 	var col = make([]byte, 81)
 	var square = make([]byte, 81)
 
-	for i := 0; i < 9; i++ {
-		for j := 0; j < 9; j++ {
+	var i, j byte
+	for i = 0; i < 9; i++ {
+		for j = 0; j < 9; j++ {
 			b := board[i][j]
 			if b == '.' {
 				candidate = append(candidate, i, j)
 				continue
 			}
-			row[i*9+int(b-'1')] = 1
-			col[j*9+int(b-'1')] = 1
-			square[(i/3*3+j/3)*9+int(b-'1')] = 1
+			row[i*9+(b-'1')] = 1
+			col[j*9+(b-'1')] = 1
+			square[(i/3*3+j/3)*9+(b-'1')] = 1
 		}
 	}
 
@@ -27,7 +28,7 @@ func solveSudoku(board [][]byte) {
 
 }
 
-func solve(board [][]byte, cur int, candidate []int, row, col, square []byte) bool {
+func solve(board [][]byte, cur int, candidate []byte, row, col, square []byte) bool {
 
 	if cur < 0 {
 		return true
