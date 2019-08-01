@@ -104,5 +104,7 @@ func mergeRange(a, b []int) (interval []int, suc bool) {
 		suc = false
 		return
 	}
-	return []int{min(a[0], b[0]), max(a[1], b[1])}, true
+	min, _ := MinInt(a[0], b[0])
+	max, _ := MaxInt(a[1], b[1])
+	return []int{min, max}, true
 }
