@@ -14,8 +14,8 @@ func sortSingleLinkedList(left, right *ListNode) {
 	}
 	mid := partitionSingleLinkedList(left, right)
 
-	if mid == left || mid == right {
-		return
+	if mid == left {
+		mid = left.Next
 	}
 
 	sortSingleLinkedList(left, mid)
