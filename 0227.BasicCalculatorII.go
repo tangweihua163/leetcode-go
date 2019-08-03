@@ -59,3 +59,34 @@ func calculate(s string) int {
 
 	return number[len(number)-1]
 }
+
+func _calculate(s string) int {
+	stack, num, op, res := []int{0}, 0, '+', 0
+	for i, c := range s {
+		if c >= '0' && c <= '9' {
+			num = 10*num + int(c-'0')
+		}
+
+		// i == len(s)-1 时，最后一个字符
+		if c == '+' || c == '-' || c == '*' || c == '/' || i == len(s)-1 {
+			if op == '+' {
+				stack = append(stack, num)
+			}
+			if op == '-' {
+				stack = append(stack, -num)
+			}
+			if op == '*' {
+				stack[len(stack)-1] *= num
+			}
+			if op == '/' {
+				stack[len(stack)-1] /= num
+			}
+			op = c
+			num = 0
+		}
+	}
+	for _, v := range stack {
+		res += v
+	}
+	return res
+}
