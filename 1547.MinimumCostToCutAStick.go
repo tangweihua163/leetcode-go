@@ -7,33 +7,38 @@ import (
 
 func minCost(n int, cuts []int) int {
 
-	sort.Ints(cuts)
-	var m = make([]int, (n+1)*(n+1))
+	cuts = append(cuts, 0, n)
 
-	findmincost(n, 0, n, cuts, m)
+	sort.Ints(cuts)
+
+	var m = make(map[int]int)
+
+	for k := 1; k <= len(cuts)-1; k++ {
+		for i := 0; i <= len(cuts)-1-k; i++ {
+			j := i + k
+
+			var a, b int
+			a = cuts[i]
+			b = cuts[j]
+
+			if k == 1 {
+				m[(n+1)*a+b] = 0
+				continue
+			}
+
+			m[(n+1)*a+b] = math.MaxInt64
+			for p := i + 1; p < j; p++ {
+				m[(n+1)*a+b] = min(m[(n+1)*a+b], m[(n+1)*a+cuts[p]]+m[(n+1)*cuts[p]+b]+b-a)
+			}
+		}
+	}
 
 	return m[n]
 }
 
-func findmincost(n int, l int, r int, cuts []int, m []int) int {
-	if len(cuts) == 0 {
-		return 0
+func min(a, b int) int {
+	if a < b {
+		return a
 	}
-
-	var index = (n+1)*l + r
-	if m[index] != 0 {
-		return m[index]
-	}
-
-	var min = math.MaxInt32
-	for i := 0; i < len(cuts); i++ {
-		var t = findmincost(n, l, cuts[i], cuts[:i], m) + findmincost(n, cuts[i], r, cuts[i+1:], m) + r - l
-		if t < min {
-			min = t
-		}
-	}
-
-	m[index] = min
-
-	return min
+	return b
 }
