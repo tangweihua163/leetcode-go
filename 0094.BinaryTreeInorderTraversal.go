@@ -3,27 +3,22 @@ package leetcode_go
 func inorderTraversal(root *TreeNode) []int {
 
 	result := make([]int, 0, 1000)
+	stack := make([]*TreeNode, 0, 1000)
 
-	if root == nil {
-		return result
+	var p = root
+
+	for p != nil || len(stack) > 0 {
+		for p != nil {
+			stack = append(stack, p)
+			p = p.Left
+		}
+		if len(stack) > 0 {
+			p = stack[len(stack)-1]
+			result = append(result, p.Val)
+			stack = stack[:len(stack)-1]
+			p = p.Right
+		}
 	}
-
-	result = inorderTraversal2Slice(root, result)
 
 	return result
-}
-
-func inorderTraversal2Slice(root *TreeNode, s []int) []int {
-
-	if root.Left != nil {
-		s = inorderTraversal2Slice(root.Left, s)
-	}
-
-	s = append(s, root.Val)
-
-	if root.Right != nil {
-		s = inorderTraversal2Slice(root.Right, s)
-	}
-
-	return s
 }
