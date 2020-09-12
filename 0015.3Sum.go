@@ -41,3 +41,51 @@ func threeSum(nums []int) [][]int {
 	}
 	return result
 }
+
+func threeSum2(nums []int) [][]int {
+
+	sort.Ints(nums)
+
+	result := make([][]int, 0, 10)
+	m := make(map[int]int, len(nums))
+
+	for i := 0; i < len(nums); i++ {
+		m[nums[i]]++
+	}
+
+	for i := 0; i < len(nums)-1; i++ {
+
+		if i > 0 && nums[i] == nums[i-1] {
+			continue
+		}
+
+		m[nums[i]]--
+
+		for j := i + 1; j < len(nums); j++ {
+
+			if j > i+1 && nums[j] == nums[j-1] {
+				continue
+			}
+
+			t := 0 - nums[i] - nums[j]
+
+			if t < nums[j] {
+				break
+			}
+
+			m[nums[j]]--
+
+			if m[t] > 0 {
+				result = append(result, []int{nums[i], nums[j], t})
+			}
+
+			m[nums[j]]++
+
+			if t == nums[j] {
+				break
+			}
+		}
+	}
+
+	return result
+}
