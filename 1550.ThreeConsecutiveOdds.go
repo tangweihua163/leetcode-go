@@ -25,3 +25,18 @@ func threeConsecutiveOdds(arr []int) bool {
 
 	return false
 }
+
+func threeConsecutiveOdds2(arr []int) bool {
+	var count int
+	for i := 0; i < len(arr); i++ {
+		if arr[i]&1 == 0 {
+			count = 0
+		} else {
+			count++
+			if count == 3 {
+				return true
+			}
+		}
+	}
+	return false
+}
